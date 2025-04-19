@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 45 Hotels Interactive Map</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="header-bar">Top 45 Hotels Interactive Map</div>
+  <div id="map-container">
+    <iframe src="map_inner.html" id="map-iframe" width="100%" height="600" style="border:none;"></iframe>
+  </div>
+  <div id="table-container">
+    <div id="table-drag-handle">Hotels on Map</div>
+    {{TABLE_HTML}}
+    <div id="table-resize-handle"></div>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    // These will be replaced by the Python script
+    window.collectMarkers(8, {{MARKER_COUNT}});
+    window.setupTableRowClicks({{MARKER_COUNT}});
+  </script>
+</body>
+</html>

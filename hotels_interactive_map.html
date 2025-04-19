@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_7ea1470c2e6805cc42f39e62a3ecacc0 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+<script>
+(function() {
+  var tries = 0;
+  var maxTries = 30;
+  var interval = setInterval(function() {
+    for (var key in window) {
+      if (key.startsWith('map_')) {
+        window.map = window[key];
+        console.log('DEBUG: window.map set to', key);
+        clearInterval(interval);
+        return;
+      }
+    }
+    tries++;
+    if (tries >= maxTries) {
+      clearInterval(interval);
+      console.warn('DEBUG: Could not find map variable after retries');
+    }
+  }, 200);
+})();
+</script>
+    
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
+<script src="main.js"></script>
+
+<div class="header-bar">Top 50 Hotels Interactive Map</div>
+<div id="table-container" style="width:420px; height:350px;">
+  <table class="hotel-table"><thead><tr><th>Rank</th><th>Hotel Name</th><th>City</th><th>Country</th></tr></thead><tbody><tr data-idx="0"><td>1</td><td>Capella Bangkok</td><td>Bangkok</td><td>Thailand</td></tr><tr data-idx="1"><td>2</td><td>Passalacqua</td><td>Moltrasio</td><td>Italy</td></tr><tr data-idx="2"><td>3</td><td>Rosewood Hong Kong</td><td>Hong Kong</td><td>Hong Kong</td></tr><tr data-idx="3"><td>4</td><td>Cheval Blanc Paris</td><td>Paris</td><td>France</td></tr><tr data-idx="4"><td>5</td><td>The Upper House</td><td>Hong Kong</td><td>Hong Kong</td></tr><tr data-idx="5"><td>6</td><td>Raffles Singapore</td><td>Singapore</td><td>Singapore</td></tr><tr data-idx="6"><td>7</td><td>Aman Tokyo</td><td>Tokyo</td><td>Japan</td></tr><tr data-idx="7"><td>8</td><td>Soneva Fushi</td><td>Kunfunadhoo Island</td><td>Maldives</td></tr><tr data-idx="8"><td>9</td><td>Atlantis The Royal</td><td>Dubai</td><td>United Arab Emirates</td></tr><tr data-idx="9"><td>10</td><td>Nihi Sumba</td><td>Sumba Island</td><td>Indonesia</td></tr><tr data-idx="10"><td>11</td><td>Claridge’s London</td><td>London</td><td>United Kingdom</td></tr><tr data-idx="11"><td>12</td><td>Mandarin Oriental Bangkok</td><td>Bangkok</td><td>Thailand</td></tr><tr data-idx="12"><td>13</td><td>Raffles London at The OWO</td><td>London</td><td>United Kingdom</td></tr><tr data-idx="13"><td>14</td><td>Four Seasons Bangkok at Chao Phraya River</td><td>Bangkok</td><td>Thailand</td></tr><tr data-idx="14"><td>15</td><td>Hôtel de Crillon</td><td>Paris</td><td>France</td></tr><tr data-idx="15"><td>16</td><td>Chablé Yucatán</td><td>Chocholá</td><td>Mexico</td></tr><tr data-idx="16"><td>17</td><td>Hotel du Cap-Eden-Roc</td><td>Antibes</td><td>France</td></tr><tr data-idx="17"><td>18</td><td>Maroma, A Belmond Hotel</td><td>Riviera Maya</td><td>Mexico</td></tr><tr data-idx="18"><td>19</td><td>Four Seasons Firenze</td><td>Florence</td><td>Italy</td></tr><tr data-idx="19"><td>20</td><td>Borgo Santandrea</td><td>Amalfi</td><td>Italy</td></tr><tr data-idx="20"><td>21</td><td>Desa Potato Head</td><td>Bali</td><td>Indonesia</td></tr><tr data-idx="21"><td>22</td><td>Bulgari Tokyo</td><td>Tokyo</td><td>Japan</td></tr><tr data-idx="22"><td>23</td><td>The Lana</td><td>Dubai</td><td>United Arab Emirates</td></tr><tr data-idx="23"><td>24</td><td>Rosewood São Paulo</td><td>São Paulo</td><td>Brazil</td></tr><tr data-idx="24"><td>25</td><td>The Calile</td><td>Brisbane</td><td>Australia</td></tr><tr data-idx="25"><td>26</td><td>The Connaught</td><td>London</td><td>United Kingdom</td></tr><tr data-idx="26"><td>27</td><td>The Siam</td><td>Bangkok</td><td>Thailand</td></tr><tr data-idx="27"><td>28</td><td>The Oberoi Udaivilas</td><td>Udaipur</td><td>India</td></tr><tr data-idx="28"><td>29</td><td>The Peninsula Tokyo</td><td>Tokyo</td><td>Japan</td></tr><tr data-idx="29"><td>30</td><td>The Brando</td><td>Tetiaroa</td><td>French Polynesia</td></tr><tr data-idx="30"><td>31</td><td>La Mamounia</td><td>Marrakech</td><td>Morocco</td></tr><tr data-idx="31"><td>32</td><td>The Lowell</td><td>New York City</td><td>United States</td></tr><tr data-idx="32"><td>33</td><td>The Oberoi Amarvilas</td><td>Agra</td><td>India</td></tr><tr data-idx="33"><td>34</td><td>The Setai</td><td>Miami Beach</td><td>United States</td></tr><tr data-idx="34"><td>35</td><td>The Chedi Andermatt</td><td>Andermatt</td><td>Switzerland</td></tr><tr data-idx="35"><td>36</td><td>The Ritz-Carlton Kyoto</td><td>Kyoto</td><td>Japan</td></tr><tr data-idx="36"><td>37</td><td>The Silo</td><td>Cape Town</td><td>South Africa</td></tr><tr data-idx="37"><td>38</td><td>Royal Mansour</td><td>Marrakech</td><td>Morocco</td></tr><tr data-idx="38"><td>39</td><td>The Langham</td><td>Sydney</td><td>Australia</td></tr><tr data-idx="39"><td>40</td><td>The St. Regis Bali Resort</td><td>Bali</td><td>Indonesia</td></tr><tr data-idx="40"><td>41</td><td>The Peninsula Shanghai</td><td>Shanghai</td><td>China</td></tr><tr data-idx="41"><td>42</td><td>The Beverly Hills Hotel</td><td>Beverly Hills</td><td>United States</td></tr><tr data-idx="42"><td>43</td><td>The Oberoi New Delhi</td><td>New Delhi</td><td>India</td></tr><tr data-idx="43"><td>44</td><td>The Ritz Paris</td><td>Paris</td><td>France</td></tr><tr data-idx="44"><td>45</td><td>The Gritti Palace</td><td>Venice</td><td>Italy</td></tr></tbody></table>
+  <div id="table-resize-handle"></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  window.collectMarkers(16, 45);
+  setTimeout(function() { window.setupTableRowClicks(45); }, 800);
+});
+</script>
+    
+<script>
+console.log('DEBUG: Listing all global marker variables:');
+for (var key in window) {
+  if (key.startsWith('marker_')) {
+    console.log('window.' + key, '=', window[key]);
+  }
+}
+console.log('DEBUG: window._hotel_markers =', window._hotel_markers);
+</script>
+    
+            <div class="folium-map" id="map_7ea1470c2e6805cc42f39e62a3ecacc0" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_7ea1470c2e6805cc42f39e62a3ecacc0 = L.map(
+                "map_7ea1470c2e6805cc42f39e62a3ecacc0",
+                {
+                    center: [22.654284444444443, 42.29690888888889],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "maxBounds": [
+[
+-90,
+-180,
+],
+[
+90,
+180,
+],
+],
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f1fd15d7733ed8027ca4cf37f15c9f1c = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f1fd15d7733ed8027ca4cf37f15c9f1c.addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+            map_7ea1470c2e6805cc42f39e62a3ecacc0.fitBounds(
+                [[-35.9068, -871.583], [53.5136, 875.037]],
+                {}
+            );
+        
+    
+            var marker_0_294ea5d2f256268c6ac3541d60805ba5 = L.circleMarker(
+                [13.7058, 100.5108],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_542564488cfb01738b3380da91b1e590 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0976fdf25f00f9eba02b3e219f69e2b5 = $(`<div id="html_0976fdf25f00f9eba02b3e219f69e2b5" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://capellahotels.com/en/capella-bangkok" target="_blank" class="popup-hotel-link">Capella Bangkok</a>     </div>`)[0];
+                popup_542564488cfb01738b3380da91b1e590.setContent(html_0976fdf25f00f9eba02b3e219f69e2b5);
+            
+        
+
+        marker_0_294ea5d2f256268c6ac3541d60805ba5.bindPopup(popup_542564488cfb01738b3380da91b1e590)
+        ;
+
+        
+    
+    
+            marker_0_294ea5d2f256268c6ac3541d60805ba5.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1_5149e5a57c5096fe6263f20df8ba532d = L.circleMarker(
+                [45.8515, 9.0952],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_459f4fb701279b72a932a1e71f0ade68 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a9787615dd2635205fadc6c44c6d2fda = $(`<div id="html_a9787615dd2635205fadc6c44c6d2fda" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.passalacqua.it/en/" target="_blank" class="popup-hotel-link">Passalacqua</a>     </div>`)[0];
+                popup_459f4fb701279b72a932a1e71f0ade68.setContent(html_a9787615dd2635205fadc6c44c6d2fda);
+            
+        
+
+        marker_1_5149e5a57c5096fe6263f20df8ba532d.bindPopup(popup_459f4fb701279b72a932a1e71f0ade68)
+        ;
+
+        
+    
+    
+            marker_1_5149e5a57c5096fe6263f20df8ba532d.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2_f962c70c915310302145fe5229b1054d = L.circleMarker(
+                [22.2947, 114.1736],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_ffea52dba2872f1b9784af08c71bf9b8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_24c51c2c9bb9aafa000cd5e1a4ce77f0 = $(`<div id="html_24c51c2c9bb9aafa000cd5e1a4ce77f0" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.rosewoodhotels.com/en/hong-kong" target="_blank" class="popup-hotel-link">Rosewood Hong Kong</a>     </div>`)[0];
+                popup_ffea52dba2872f1b9784af08c71bf9b8.setContent(html_24c51c2c9bb9aafa000cd5e1a4ce77f0);
+            
+        
+
+        marker_2_f962c70c915310302145fe5229b1054d.bindPopup(popup_ffea52dba2872f1b9784af08c71bf9b8)
+        ;
+
+        
+    
+    
+            marker_2_f962c70c915310302145fe5229b1054d.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3_f7fb6a36b5ed37e6e32231e3976f5947 = L.circleMarker(
+                [48.8546, 2.347],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_2f7aaa092ac5f26a31c16a446668bc86 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8e7ae107abc1b0ad8c783c8e4bbe15a1 = $(`<div id="html_8e7ae107abc1b0ad8c783c8e4bbe15a1" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.chevalblanc.com/en/maison/paris/" target="_blank" class="popup-hotel-link">Cheval Blanc Paris</a>     </div>`)[0];
+                popup_2f7aaa092ac5f26a31c16a446668bc86.setContent(html_8e7ae107abc1b0ad8c783c8e4bbe15a1);
+            
+        
+
+        marker_3_f7fb6a36b5ed37e6e32231e3976f5947.bindPopup(popup_2f7aaa092ac5f26a31c16a446668bc86)
+        ;
+
+        
+    
+    
+            marker_3_f7fb6a36b5ed37e6e32231e3976f5947.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4_5b701a7978f1c205493a6567c83f951c = L.circleMarker(
+                [22.2783, 114.1588],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_f10bf0eaec7da9a9180a1f6d61774998 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5d526a3b3b5f8fb9f52eab6653fcabdd = $(`<div id="html_5d526a3b3b5f8fb9f52eab6653fcabdd" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.thehousecollective.com/en/the-upper-house/" target="_blank" class="popup-hotel-link">The Upper House</a>     </div>`)[0];
+                popup_f10bf0eaec7da9a9180a1f6d61774998.setContent(html_5d526a3b3b5f8fb9f52eab6653fcabdd);
+            
+        
+
+        marker_4_5b701a7978f1c205493a6567c83f951c.bindPopup(popup_f10bf0eaec7da9a9180a1f6d61774998)
+        ;
+
+        
+    
+    
+            marker_4_5b701a7978f1c205493a6567c83f951c.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5_9f1d1d4bfcc01648c005214428466891 = L.circleMarker(
+                [1.2945, 103.8553],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_d3d956d11e2fa8627ac58ccd8433aad9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d462ac0af24310b1c427e77bb3743f77 = $(`<div id="html_d462ac0af24310b1c427e77bb3743f77" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.raffles.com/singapore/" target="_blank" class="popup-hotel-link">Raffles Singapore</a>     </div>`)[0];
+                popup_d3d956d11e2fa8627ac58ccd8433aad9.setContent(html_d462ac0af24310b1c427e77bb3743f77);
+            
+        
+
+        marker_5_9f1d1d4bfcc01648c005214428466891.bindPopup(popup_d3d956d11e2fa8627ac58ccd8433aad9)
+        ;
+
+        
+    
+    
+            marker_5_9f1d1d4bfcc01648c005214428466891.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6_a48a567c558239a67555afc332ebf75e = L.circleMarker(
+                [35.6995, 139.6917],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_652f759799a2c364d80b80ad038e62b6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0d9e5dbd4f7384dbe0e5cf714406d368 = $(`<div id="html_0d9e5dbd4f7384dbe0e5cf714406d368" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.aman.com/resorts/aman-tokyo" target="_blank" class="popup-hotel-link">Aman Tokyo</a>     </div>`)[0];
+                popup_652f759799a2c364d80b80ad038e62b6.setContent(html_0d9e5dbd4f7384dbe0e5cf714406d368);
+            
+        
+
+        marker_6_a48a567c558239a67555afc332ebf75e.bindPopup(popup_652f759799a2c364d80b80ad038e62b6)
+        ;
+
+        
+    
+    
+            marker_6_a48a567c558239a67555afc332ebf75e.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7_4fb8645f2255056fe681fe020efc04be = L.circleMarker(
+                [5.287, 73.09],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_3fd98a51bdf2c1c49a70a2eb00d7943e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ea680ff78fa4a6dcec656311606f2de5 = $(`<div id="html_ea680ff78fa4a6dcec656311606f2de5" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://soneva.com/resorts/soneva-fushi/" target="_blank" class="popup-hotel-link">Soneva Fushi</a>     </div>`)[0];
+                popup_3fd98a51bdf2c1c49a70a2eb00d7943e.setContent(html_ea680ff78fa4a6dcec656311606f2de5);
+            
+        
+
+        marker_7_4fb8645f2255056fe681fe020efc04be.bindPopup(popup_3fd98a51bdf2c1c49a70a2eb00d7943e)
+        ;
+
+        
+    
+    
+            marker_7_4fb8645f2255056fe681fe020efc04be.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8_6cbdf687b52d3fca9ac7f2f70851c93f = L.circleMarker(
+                [25.1412, 55.1853],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_e1ffefe280db63340efb675a9d0eef68 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4c5f5de48742951643393ab855ab4ac3 = $(`<div id="html_4c5f5de48742951643393ab855ab4ac3" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.atlantis.com/atlantis-the-royal" target="_blank" class="popup-hotel-link">Atlantis The Royal</a>     </div>`)[0];
+                popup_e1ffefe280db63340efb675a9d0eef68.setContent(html_4c5f5de48742951643393ab855ab4ac3);
+            
+        
+
+        marker_8_6cbdf687b52d3fca9ac7f2f70851c93f.bindPopup(popup_e1ffefe280db63340efb675a9d0eef68)
+        ;
+
+        
+    
+    
+            marker_8_6cbdf687b52d3fca9ac7f2f70851c93f.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9_cdee739284ba445314f4065a23ac1561 = L.circleMarker(
+                [-9.6566, 119.291],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_40bb1ef41dde5a317060607f807729d2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e891cccb584997a7c6dcc5841d345c7c = $(`<div id="html_e891cccb584997a7c6dcc5841d345c7c" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://nihi.com/" target="_blank" class="popup-hotel-link">Nihi Sumba</a>     </div>`)[0];
+                popup_40bb1ef41dde5a317060607f807729d2.setContent(html_e891cccb584997a7c6dcc5841d345c7c);
+            
+        
+
+        marker_9_cdee739284ba445314f4065a23ac1561.bindPopup(popup_40bb1ef41dde5a317060607f807729d2)
+        ;
+
+        
+    
+    
+            marker_9_cdee739284ba445314f4065a23ac1561.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_10_297f3877caec654001210554cb7b3378 = L.circleMarker(
+                [51.5136, -0.147],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_4367b1294602e642a3cd8054ce9da28d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c97eb68dfe3d03807d0da49414522528 = $(`<div id="html_c97eb68dfe3d03807d0da49414522528" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.claridges.co.uk/" target="_blank" class="popup-hotel-link">Claridge’s London</a>     </div>`)[0];
+                popup_4367b1294602e642a3cd8054ce9da28d.setContent(html_c97eb68dfe3d03807d0da49414522528);
+            
+        
+
+        marker_10_297f3877caec654001210554cb7b3378.bindPopup(popup_4367b1294602e642a3cd8054ce9da28d)
+        ;
+
+        
+    
+    
+            marker_10_297f3877caec654001210554cb7b3378.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_11_641bbed0e5ac706bad6a73dc1c263961 = L.circleMarker(
+                [13.7236, 100.513],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_15f2daa060ec35dfc280aa11ceac6fdc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d70cd4cb628f6dd3b803a9d1bcf95dc2 = $(`<div id="html_d70cd4cb628f6dd3b803a9d1bcf95dc2" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.mandarinoriental.com/bangkok/chao-phraya-river/luxury-hotel" target="_blank" class="popup-hotel-link">Mandarin Oriental Bangkok</a>     </div>`)[0];
+                popup_15f2daa060ec35dfc280aa11ceac6fdc.setContent(html_d70cd4cb628f6dd3b803a9d1bcf95dc2);
+            
+        
+
+        marker_11_641bbed0e5ac706bad6a73dc1c263961.bindPopup(popup_15f2daa060ec35dfc280aa11ceac6fdc)
+        ;
+
+        
+    
+    
+            marker_11_641bbed0e5ac706bad6a73dc1c263961.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_12_d4737bcfe1faed8b49cf200839dba258 = L.circleMarker(
+                [51.5033, -0.1276],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_bb7d6135a73e0e03c5ae10ff63680778 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6ec1f7904e8e508cb7226efd39639091 = $(`<div id="html_6ec1f7904e8e508cb7226efd39639091" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.raffles.com/london/" target="_blank" class="popup-hotel-link">Raffles London at The OWO</a>     </div>`)[0];
+                popup_bb7d6135a73e0e03c5ae10ff63680778.setContent(html_6ec1f7904e8e508cb7226efd39639091);
+            
+        
+
+        marker_12_d4737bcfe1faed8b49cf200839dba258.bindPopup(popup_bb7d6135a73e0e03c5ae10ff63680778)
+        ;
+
+        
+    
+    
+            marker_12_d4737bcfe1faed8b49cf200839dba258.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_13_cdf3a479729b59268cb3e19b18c609aa = L.circleMarker(
+                [13.7206, 100.5144],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_7b8a8b9e0c7429dd3c2d79a24424b2bb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b8f733cf6e2cf9953155672065148a7d = $(`<div id="html_b8f733cf6e2cf9953155672065148a7d" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.fourseasons.com/bangkok/" target="_blank" class="popup-hotel-link">Four Seasons Bangkok at Chao Phraya River</a>     </div>`)[0];
+                popup_7b8a8b9e0c7429dd3c2d79a24424b2bb.setContent(html_b8f733cf6e2cf9953155672065148a7d);
+            
+        
+
+        marker_13_cdf3a479729b59268cb3e19b18c609aa.bindPopup(popup_7b8a8b9e0c7429dd3c2d79a24424b2bb)
+        ;
+
+        
+    
+    
+            marker_13_cdf3a479729b59268cb3e19b18c609aa.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_14_02ca98b13751ffadfc3751ca4bda48ac = L.circleMarker(
+                [48.8686, 2.3215],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_4d9642a6ab1440c9389bb0a236220d78 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4d6fe2aadd1dd1c1ce07135a7fc8bd49 = $(`<div id="html_4d6fe2aadd1dd1c1ce07135a7fc8bd49" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.rosewoodhotels.com/en/hotel-de-crillon" target="_blank" class="popup-hotel-link">Hôtel de Crillon</a>     </div>`)[0];
+                popup_4d9642a6ab1440c9389bb0a236220d78.setContent(html_4d6fe2aadd1dd1c1ce07135a7fc8bd49);
+            
+        
+
+        marker_14_02ca98b13751ffadfc3751ca4bda48ac.bindPopup(popup_4d9642a6ab1440c9389bb0a236220d78)
+        ;
+
+        
+    
+    
+            marker_14_02ca98b13751ffadfc3751ca4bda48ac.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_15_e20fb9dd675b10c68911b0e6044fe9a5 = L.circleMarker(
+                [20.6886, -89.9784],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_b0b7dbbf3f5ef594a126fae5349aa28e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bc39daf432ddd7b4745a6dc1b5af73fb = $(`<div id="html_bc39daf432ddd7b4745a6dc1b5af73fb" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://chablehotels.com/chable-yucatan/" target="_blank" class="popup-hotel-link">Chablé Yucatán</a>     </div>`)[0];
+                popup_b0b7dbbf3f5ef594a126fae5349aa28e.setContent(html_bc39daf432ddd7b4745a6dc1b5af73fb);
+            
+        
+
+        marker_15_e20fb9dd675b10c68911b0e6044fe9a5.bindPopup(popup_b0b7dbbf3f5ef594a126fae5349aa28e)
+        ;
+
+        
+    
+    
+            marker_15_e20fb9dd675b10c68911b0e6044fe9a5.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_16_32e8f9ff86c7a46b9657b43dd89a8e1f = L.circleMarker(
+                [43.553, 7.1239],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_d2a3c0b5288e6a6d77ba6ab55d32c407 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d5ce2670b022ae59b7ebc88f9449bc2d = $(`<div id="html_d5ce2670b022ae59b7ebc88f9449bc2d" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.oetkercollection.com/hotels/hotel-du-cap-eden-roc/" target="_blank" class="popup-hotel-link">Hotel du Cap-Eden-Roc</a>     </div>`)[0];
+                popup_d2a3c0b5288e6a6d77ba6ab55d32c407.setContent(html_d5ce2670b022ae59b7ebc88f9449bc2d);
+            
+        
+
+        marker_16_32e8f9ff86c7a46b9657b43dd89a8e1f.bindPopup(popup_d2a3c0b5288e6a6d77ba6ab55d32c407)
+        ;
+
+        
+    
+    
+            marker_16_32e8f9ff86c7a46b9657b43dd89a8e1f.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_17_daa578577c6e931fd0113a30300c84e9 = L.circleMarker(
+                [20.714, -87.0145],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_ce18855fde111c7eb88abb537c540f2f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cb9ff712cbd87fee05d0d179b9e71561 = $(`<div id="html_cb9ff712cbd87fee05d0d179b9e71561" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.belmond.com/hotels/north-america/mexico/riviera-maya/maroma-a-belmond-hotel-riviera-maya/" target="_blank" class="popup-hotel-link">Maroma, A Belmond Hotel</a>     </div>`)[0];
+                popup_ce18855fde111c7eb88abb537c540f2f.setContent(html_cb9ff712cbd87fee05d0d179b9e71561);
+            
+        
+
+        marker_17_daa578577c6e931fd0113a30300c84e9.bindPopup(popup_ce18855fde111c7eb88abb537c540f2f)
+        ;
+
+        
+    
+    
+            marker_17_daa578577c6e931fd0113a30300c84e9.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_18_a12f02e2e6123c5d297d4959acf3b745 = L.circleMarker(
+                [43.7793, 11.264],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_14f81d2a026d5c289ed2a08855c14686 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ee22bf69e13753e48d39dff2a2139eca = $(`<div id="html_ee22bf69e13753e48d39dff2a2139eca" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.fourseasons.com/florence/" target="_blank" class="popup-hotel-link">Four Seasons Firenze</a>     </div>`)[0];
+                popup_14f81d2a026d5c289ed2a08855c14686.setContent(html_ee22bf69e13753e48d39dff2a2139eca);
+            
+        
+
+        marker_18_a12f02e2e6123c5d297d4959acf3b745.bindPopup(popup_14f81d2a026d5c289ed2a08855c14686)
+        ;
+
+        
+    
+    
+            marker_18_a12f02e2e6123c5d297d4959acf3b745.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_19_282acfc631cc16de3ac09050c7e25e5a = L.circleMarker(
+                [40.6333, 14.602],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_80ca38e17726e06118ba1af0501cccf6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_62afd1e626e5a5fd4a47a63dcb3fb0d9 = $(`<div id="html_62afd1e626e5a5fd4a47a63dcb3fb0d9" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.borgosantandrea.it/" target="_blank" class="popup-hotel-link">Borgo Santandrea</a>     </div>`)[0];
+                popup_80ca38e17726e06118ba1af0501cccf6.setContent(html_62afd1e626e5a5fd4a47a63dcb3fb0d9);
+            
+        
+
+        marker_19_282acfc631cc16de3ac09050c7e25e5a.bindPopup(popup_80ca38e17726e06118ba1af0501cccf6)
+        ;
+
+        
+    
+    
+            marker_19_282acfc631cc16de3ac09050c7e25e5a.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_20_5c6664a7340e3c51600e623f4bba363f = L.circleMarker(
+                [-8.6765, 115.1608],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_859adeda9cd03d6ae298981efe1134d3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_958c83e2aef536f45c5771e007f1184a = $(`<div id="html_958c83e2aef536f45c5771e007f1184a" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.potatohead.co/" target="_blank" class="popup-hotel-link">Desa Potato Head</a>     </div>`)[0];
+                popup_859adeda9cd03d6ae298981efe1134d3.setContent(html_958c83e2aef536f45c5771e007f1184a);
+            
+        
+
+        marker_20_5c6664a7340e3c51600e623f4bba363f.bindPopup(popup_859adeda9cd03d6ae298981efe1134d3)
+        ;
+
+        
+    
+    
+            marker_20_5c6664a7340e3c51600e623f4bba363f.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_21_383c564c87205b34178042d2762dbbb6 = L.circleMarker(
+                [35.679500000000004, 139.6917],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_3df2abfe653e33f2158d9a35408108a4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_31af4487d9701ccda42ac040a5a21947 = $(`<div id="html_31af4487d9701ccda42ac040a5a21947" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.bulgarihotels.com/en_US/tokyo" target="_blank" class="popup-hotel-link">Bulgari Tokyo</a>     </div>`)[0];
+                popup_3df2abfe653e33f2158d9a35408108a4.setContent(html_31af4487d9701ccda42ac040a5a21947);
+            
+        
+
+        marker_21_383c564c87205b34178042d2762dbbb6.bindPopup(popup_3df2abfe653e33f2158d9a35408108a4)
+        ;
+
+        
+    
+    
+            marker_21_383c564c87205b34178042d2762dbbb6.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_22_1ac7b1bac7a5e7137d828b782ef64985 = L.circleMarker(
+                [25.2048, 55.2708],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_8ae451a3ea41f261fbc2396f0774eb74 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a82b9e3b99fd631dbff16dfc7d8a745e = $(`<div id="html_a82b9e3b99fd631dbff16dfc7d8a745e" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.dorchestercollection.com/en/dubai/the-lana/" target="_blank" class="popup-hotel-link">The Lana</a>     </div>`)[0];
+                popup_8ae451a3ea41f261fbc2396f0774eb74.setContent(html_a82b9e3b99fd631dbff16dfc7d8a745e);
+            
+        
+
+        marker_22_1ac7b1bac7a5e7137d828b782ef64985.bindPopup(popup_8ae451a3ea41f261fbc2396f0774eb74)
+        ;
+
+        
+    
+    
+            marker_22_1ac7b1bac7a5e7137d828b782ef64985.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_23_f936c2db9807c54ced4d91c43c70586e = L.circleMarker(
+                [-23.5614, -46.6559],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_e51021c4c083fc922c76b70eebda9263 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_54dc6e195abe28c7d021c004ae1b3da2 = $(`<div id="html_54dc6e195abe28c7d021c004ae1b3da2" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.rosewoodhotels.com/en/sao-paulo" target="_blank" class="popup-hotel-link">Rosewood São Paulo</a>     </div>`)[0];
+                popup_e51021c4c083fc922c76b70eebda9263.setContent(html_54dc6e195abe28c7d021c004ae1b3da2);
+            
+        
+
+        marker_23_f936c2db9807c54ced4d91c43c70586e.bindPopup(popup_e51021c4c083fc922c76b70eebda9263)
+        ;
+
+        
+    
+    
+            marker_23_f936c2db9807c54ced4d91c43c70586e.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_24_cedd4d9eb9ada16027ed470a714222fb = L.circleMarker(
+                [-27.455, 153.037],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_dea7f344f6deb43bcf91e4fd6843439a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f9502cf7ac1a94fafa0121920336c921 = $(`<div id="html_f9502cf7ac1a94fafa0121920336c921" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://thecalilehotel.com/" target="_blank" class="popup-hotel-link">The Calile</a>     </div>`)[0];
+                popup_dea7f344f6deb43bcf91e4fd6843439a.setContent(html_f9502cf7ac1a94fafa0121920336c921);
+            
+        
+
+        marker_24_cedd4d9eb9ada16027ed470a714222fb.bindPopup(popup_dea7f344f6deb43bcf91e4fd6843439a)
+        ;
+
+        
+    
+    
+            marker_24_cedd4d9eb9ada16027ed470a714222fb.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_25_b50d6629c72384fb44abb4d17a9c4f1d = L.circleMarker(
+                [51.5113, -0.1495],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_0c6ca6c7cad4ee1a63598d44d7d28185 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_51f5117ad1041cf231a8029249432185 = $(`<div id="html_51f5117ad1041cf231a8029249432185" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.the-connaught.co.uk/" target="_blank" class="popup-hotel-link">The Connaught</a>     </div>`)[0];
+                popup_0c6ca6c7cad4ee1a63598d44d7d28185.setContent(html_51f5117ad1041cf231a8029249432185);
+            
+        
+
+        marker_25_b50d6629c72384fb44abb4d17a9c4f1d.bindPopup(popup_0c6ca6c7cad4ee1a63598d44d7d28185)
+        ;
+
+        
+    
+    
+            marker_25_b50d6629c72384fb44abb4d17a9c4f1d.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_26_e01969adf31c0ea15f8ea703cd3e0874 = L.circleMarker(
+                [13.7801, 100.513],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_0211fc8c243011b5904e0375cbf14085 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bcf125888ec4ba932665b2258c0b8133 = $(`<div id="html_bcf125888ec4ba932665b2258c0b8133" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.thesiamhotel.com/" target="_blank" class="popup-hotel-link">The Siam</a>     </div>`)[0];
+                popup_0211fc8c243011b5904e0375cbf14085.setContent(html_bcf125888ec4ba932665b2258c0b8133);
+            
+        
+
+        marker_26_e01969adf31c0ea15f8ea703cd3e0874.bindPopup(popup_0211fc8c243011b5904e0375cbf14085)
+        ;
+
+        
+    
+    
+            marker_26_e01969adf31c0ea15f8ea703cd3e0874.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_27_ed5b1a013c3c93f90b7f39a28b6f5dad = L.circleMarker(
+                [24.576, 73.682],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_058e811ae8210fa16baefbb1ad856f56 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c4073094f6bd4873457f4be747a546a4 = $(`<div id="html_c4073094f6bd4873457f4be747a546a4" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.oberoihotels.com/hotels-in-udaipur-udaivilas-resort/" target="_blank" class="popup-hotel-link">The Oberoi Udaivilas</a>     </div>`)[0];
+                popup_058e811ae8210fa16baefbb1ad856f56.setContent(html_c4073094f6bd4873457f4be747a546a4);
+            
+        
+
+        marker_27_ed5b1a013c3c93f90b7f39a28b6f5dad.bindPopup(popup_058e811ae8210fa16baefbb1ad856f56)
+        ;
+
+        
+    
+    
+            marker_27_ed5b1a013c3c93f90b7f39a28b6f5dad.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_28_e4d1e056cbe32ca7105fdc3bfb368436 = L.circleMarker(
+                [35.6745, 139.761],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_1740d32df517b3768baff8dfbd2aa0cf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1328803814fdca977fd26888302023d9 = $(`<div id="html_1328803814fdca977fd26888302023d9" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.peninsula.com/en/tokyo/5-star-luxury-hotel-ginza" target="_blank" class="popup-hotel-link">The Peninsula Tokyo</a>     </div>`)[0];
+                popup_1740d32df517b3768baff8dfbd2aa0cf.setContent(html_1328803814fdca977fd26888302023d9);
+            
+        
+
+        marker_28_e4d1e056cbe32ca7105fdc3bfb368436.bindPopup(popup_1740d32df517b3768baff8dfbd2aa0cf)
+        ;
+
+        
+    
+    
+            marker_28_e4d1e056cbe32ca7105fdc3bfb368436.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_29_4a1a115ad0e8fffde261467628607a11 = L.circleMarker(
+                [-17.008, -149.583],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_605f7472671b207c9c06cfa090797950 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3236ad0286e9b738608a7aa8ad4148bb = $(`<div id="html_3236ad0286e9b738608a7aa8ad4148bb" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://thebrando.com/" target="_blank" class="popup-hotel-link">The Brando</a>     </div>`)[0];
+                popup_605f7472671b207c9c06cfa090797950.setContent(html_3236ad0286e9b738608a7aa8ad4148bb);
+            
+        
+
+        marker_29_4a1a115ad0e8fffde261467628607a11.bindPopup(popup_605f7472671b207c9c06cfa090797950)
+        ;
+
+        
+    
+    
+            marker_29_4a1a115ad0e8fffde261467628607a11.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_30_230e3ea8c9433fb2cf8bb4b79a20a94c = L.circleMarker(
+                [31.6341, -7.9892],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_908d3ae45b80ac8179325c97c64ea6bd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c55f4137b3f1427c53104b92682b41b7 = $(`<div id="html_c55f4137b3f1427c53104b92682b41b7" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.mamounia.com/" target="_blank" class="popup-hotel-link">La Mamounia</a>     </div>`)[0];
+                popup_908d3ae45b80ac8179325c97c64ea6bd.setContent(html_c55f4137b3f1427c53104b92682b41b7);
+            
+        
+
+        marker_30_230e3ea8c9433fb2cf8bb4b79a20a94c.bindPopup(popup_908d3ae45b80ac8179325c97c64ea6bd)
+        ;
+
+        
+    
+    
+            marker_30_230e3ea8c9433fb2cf8bb4b79a20a94c.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_31_5334c7318e0baacfdb8ddd674a536648 = L.circleMarker(
+                [40.769, -73.9675],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_7340172280ab3d8dd8ec5fd62724f9f3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5f1b6ae0e75ae3e6f3fe20bda41314e0 = $(`<div id="html_5f1b6ae0e75ae3e6f3fe20bda41314e0" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.lowellhotel.com/" target="_blank" class="popup-hotel-link">The Lowell</a>     </div>`)[0];
+                popup_7340172280ab3d8dd8ec5fd62724f9f3.setContent(html_5f1b6ae0e75ae3e6f3fe20bda41314e0);
+            
+        
+
+        marker_31_5334c7318e0baacfdb8ddd674a536648.bindPopup(popup_7340172280ab3d8dd8ec5fd62724f9f3)
+        ;
+
+        
+    
+    
+            marker_31_5334c7318e0baacfdb8ddd674a536648.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_32_6724dbcb4e29d9b11ee90ecbff1cb890 = L.circleMarker(
+                [27.174, 78.0419],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_bce563c4856ad5bd87d71b380273f885 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fa2bc056cc0507e8c7ddd1d523289eb7 = $(`<div id="html_fa2bc056cc0507e8c7ddd1d523289eb7" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.oberoihotels.com/hotels-in-agra-amarvilas-resort/" target="_blank" class="popup-hotel-link">The Oberoi Amarvilas</a>     </div>`)[0];
+                popup_bce563c4856ad5bd87d71b380273f885.setContent(html_fa2bc056cc0507e8c7ddd1d523289eb7);
+            
+        
+
+        marker_32_6724dbcb4e29d9b11ee90ecbff1cb890.bindPopup(popup_bce563c4856ad5bd87d71b380273f885)
+        ;
+
+        
+    
+    
+            marker_32_6724dbcb4e29d9b11ee90ecbff1cb890.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_33_e90bcf8697db168b051da897553e3863 = L.circleMarker(
+                [25.7907, -80.129],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_f533b8d87fdb4ed0432fd76e8f284d38 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2b333efbc6ebe098dcc7335666af3fdf = $(`<div id="html_2b333efbc6ebe098dcc7335666af3fdf" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.thesetaihotel.com/" target="_blank" class="popup-hotel-link">The Setai</a>     </div>`)[0];
+                popup_f533b8d87fdb4ed0432fd76e8f284d38.setContent(html_2b333efbc6ebe098dcc7335666af3fdf);
+            
+        
+
+        marker_33_e90bcf8697db168b051da897553e3863.bindPopup(popup_f533b8d87fdb4ed0432fd76e8f284d38)
+        ;
+
+        
+    
+    
+            marker_33_e90bcf8697db168b051da897553e3863.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_34_f33c702c6496da87c311822855f228c1 = L.circleMarker(
+                [46.6361, 8.5945],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_e132a6d9866a58c64146563a40924434 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0549b5e299797477fbc29fd818a6bed2 = $(`<div id="html_0549b5e299797477fbc29fd818a6bed2" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.thechediandermatt.com/" target="_blank" class="popup-hotel-link">The Chedi Andermatt</a>     </div>`)[0];
+                popup_e132a6d9866a58c64146563a40924434.setContent(html_0549b5e299797477fbc29fd818a6bed2);
+            
+        
+
+        marker_34_f33c702c6496da87c311822855f228c1.bindPopup(popup_e132a6d9866a58c64146563a40924434)
+        ;
+
+        
+    
+    
+            marker_34_f33c702c6496da87c311822855f228c1.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_35_6a0a3e7a6502d45b3af1d274213280d8 = L.circleMarker(
+                [35.0104, 135.7681],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_1e00501485e1cba300fcfe8c4359bf4c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d379bc609d2352bf2270c89dae0a41b5 = $(`<div id="html_d379bc609d2352bf2270c89dae0a41b5" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.ritzcarlton.com/en/hotels/japan/kyoto" target="_blank" class="popup-hotel-link">The Ritz-Carlton Kyoto</a>     </div>`)[0];
+                popup_1e00501485e1cba300fcfe8c4359bf4c.setContent(html_d379bc609d2352bf2270c89dae0a41b5);
+            
+        
+
+        marker_35_6a0a3e7a6502d45b3af1d274213280d8.bindPopup(popup_1e00501485e1cba300fcfe8c4359bf4c)
+        ;
+
+        
+    
+    
+            marker_35_6a0a3e7a6502d45b3af1d274213280d8.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_36_38f65647bff6104fe3d3b073833bb632 = L.circleMarker(
+                [-33.9068, 18.4216],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_d3df986400c1ae249ceb4f21b54cb394 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a85071f7eb138a2859aa02d383524da1 = $(`<div id="html_a85071f7eb138a2859aa02d383524da1" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.theroyalportfolio.com/the-silo/overview/" target="_blank" class="popup-hotel-link">The Silo</a>     </div>`)[0];
+                popup_d3df986400c1ae249ceb4f21b54cb394.setContent(html_a85071f7eb138a2859aa02d383524da1);
+            
+        
+
+        marker_36_38f65647bff6104fe3d3b073833bb632.bindPopup(popup_d3df986400c1ae249ceb4f21b54cb394)
+        ;
+
+        
+    
+    
+            marker_36_38f65647bff6104fe3d3b073833bb632.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_37_b45a75eeac03a638a105563d661c8432 = L.circleMarker(
+                [31.614099999999997, -7.9892],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_511382b98d67374526e674968bd234b3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9c771b1f07ffac9d34dc0790ad246b09 = $(`<div id="html_9c771b1f07ffac9d34dc0790ad246b09" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.royalmansour.com/en/" target="_blank" class="popup-hotel-link">Royal Mansour</a>     </div>`)[0];
+                popup_511382b98d67374526e674968bd234b3.setContent(html_9c771b1f07ffac9d34dc0790ad246b09);
+            
+        
+
+        marker_37_b45a75eeac03a638a105563d661c8432.bindPopup(popup_511382b98d67374526e674968bd234b3)
+        ;
+
+        
+    
+    
+            marker_37_b45a75eeac03a638a105563d661c8432.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_38_9cefacaa90d042e03f7cb7c0f73653ae = L.circleMarker(
+                [-33.8636, 151.207],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_64c17df33a4d7ab5c18ca057649c4f78 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_600998ee8aab9fb078a0d37089fbf525 = $(`<div id="html_600998ee8aab9fb078a0d37089fbf525" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.langhamhotels.com/en/the-langham/sydney/" target="_blank" class="popup-hotel-link">The Langham</a>     </div>`)[0];
+                popup_64c17df33a4d7ab5c18ca057649c4f78.setContent(html_600998ee8aab9fb078a0d37089fbf525);
+            
+        
+
+        marker_38_9cefacaa90d042e03f7cb7c0f73653ae.bindPopup(popup_64c17df33a4d7ab5c18ca057649c4f78)
+        ;
+
+        
+    
+    
+            marker_38_9cefacaa90d042e03f7cb7c0f73653ae.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_39_d1d912e7da5c9698ca394760a825409f = L.circleMarker(
+                [-8.808, 115.225],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_901e5b7a72353b745a54a640c31ae1c6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1d2d168d5dae9757bb585e69bf3d9f81 = $(`<div id="html_1d2d168d5dae9757bb585e69bf3d9f81" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.marriott.com/en-us/hotels/dpsxr-the-st-regis-bali-resort/overview/" target="_blank" class="popup-hotel-link">The St. Regis Bali Resort</a>     </div>`)[0];
+                popup_901e5b7a72353b745a54a640c31ae1c6.setContent(html_1d2d168d5dae9757bb585e69bf3d9f81);
+            
+        
+
+        marker_39_d1d912e7da5c9698ca394760a825409f.bindPopup(popup_901e5b7a72353b745a54a640c31ae1c6)
+        ;
+
+        
+    
+    
+            marker_39_d1d912e7da5c9698ca394760a825409f.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_40_28146e4a78e852fe55283423bc144541 = L.circleMarker(
+                [31.24, 121.49],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_84ac89d36fd33c0c9dd93333f9aa926d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3aa3e50e5b15c466810f794cd13d3898 = $(`<div id="html_3aa3e50e5b15c466810f794cd13d3898" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.peninsula.com/en/shanghai/5-star-luxury-hotel-bund" target="_blank" class="popup-hotel-link">The Peninsula Shanghai</a>     </div>`)[0];
+                popup_84ac89d36fd33c0c9dd93333f9aa926d.setContent(html_3aa3e50e5b15c466810f794cd13d3898);
+            
+        
+
+        marker_40_28146e4a78e852fe55283423bc144541.bindPopup(popup_84ac89d36fd33c0c9dd93333f9aa926d)
+        ;
+
+        
+    
+    
+            marker_40_28146e4a78e852fe55283423bc144541.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_41_01b60779129e5562e98d0274bd5a6e2d = L.circleMarker(
+                [34.081, -118.4137],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_27c494bbef5f492cdce631f6e514bcfe = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0f3b7aff234bc9fab7e9f56620d85fab = $(`<div id="html_0f3b7aff234bc9fab7e9f56620d85fab" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.dorchestercollection.com/en/los-angeles/the-beverly-hills-hotel/" target="_blank" class="popup-hotel-link">The Beverly Hills Hotel</a>     </div>`)[0];
+                popup_27c494bbef5f492cdce631f6e514bcfe.setContent(html_0f3b7aff234bc9fab7e9f56620d85fab);
+            
+        
+
+        marker_41_01b60779129e5562e98d0274bd5a6e2d.bindPopup(popup_27c494bbef5f492cdce631f6e514bcfe)
+        ;
+
+        
+    
+    
+            marker_41_01b60779129e5562e98d0274bd5a6e2d.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_42_b580e50c0c915da8a38c987e9ef0a52d = L.circleMarker(
+                [28.596, 77.243],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_6522385e6b09a4ae66db74e9c7fd7bc4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fa437b990ea20d371059a26342e8f0df = $(`<div id="html_fa437b990ea20d371059a26342e8f0df" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.oberoihotels.com/hotels-in-delhi/" target="_blank" class="popup-hotel-link">The Oberoi New Delhi</a>     </div>`)[0];
+                popup_6522385e6b09a4ae66db74e9c7fd7bc4.setContent(html_fa437b990ea20d371059a26342e8f0df);
+            
+        
+
+        marker_42_b580e50c0c915da8a38c987e9ef0a52d.bindPopup(popup_6522385e6b09a4ae66db74e9c7fd7bc4)
+        ;
+
+        
+    
+    
+            marker_42_b580e50c0c915da8a38c987e9ef0a52d.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_43_8483e7f16c1e8a63942eb6c7673abf40 = L.circleMarker(
+                [48.8686, 2.3285],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_abcd1e9ef70fe08d2b3eeec5772ef5d2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_930541a830bfe3a7ef824393d4afe5bc = $(`<div id="html_930541a830bfe3a7ef824393d4afe5bc" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.ritzparis.com/" target="_blank" class="popup-hotel-link">The Ritz Paris</a>     </div>`)[0];
+                popup_abcd1e9ef70fe08d2b3eeec5772ef5d2.setContent(html_930541a830bfe3a7ef824393d4afe5bc);
+            
+        
+
+        marker_43_8483e7f16c1e8a63942eb6c7673abf40.bindPopup(popup_abcd1e9ef70fe08d2b3eeec5772ef5d2)
+        ;
+
+        
+    
+    
+            marker_43_8483e7f16c1e8a63942eb6c7673abf40.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_44_d1e50a13fd6c282c69e6a6e3ef5dc2ee = L.circleMarker(
+                [45.4335, 12.332],
+                {"bubblingMouseEvents": true, "color": "#fff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5c6bc0", "fillOpacity": 0.92, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5, "stroke": true, "weight": 2}
+            ).addTo(map_7ea1470c2e6805cc42f39e62a3ecacc0);
+        
+    
+        var popup_a80e90346bcc01e66d669ff5cbba84ce = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_281e5bc524b9e36eca9f9ecee85355b4 = $(`<div id="html_281e5bc524b9e36eca9f9ecee85355b4" style="width: 100.0%; height: 100.0%;">     <style>     .popup-hotel-link {         font-family: "Segoe UI", Arial, sans-serif;         font-size: 1.08em;         font-weight: 600;         color: #222;         text-decoration: none !important;         background: none;         border: none;         padding: 0;         margin: 0;         transition: color 0.18s;         cursor: pointer;     }     .popup-hotel-link:hover, .popup-hotel-link:focus, .popup-hotel-link:active {         color: #757f9a;         font-weight: 600;         text-decoration: none !important;         outline: none;     }     </style>     <a href="https://www.marriott.com/en-us/hotels/vcegl-the-gritti-palace-a-luxury-collection-hotel-venice/overview/" target="_blank" class="popup-hotel-link">The Gritti Palace</a>     </div>`)[0];
+                popup_a80e90346bcc01e66d669ff5cbba84ce.setContent(html_281e5bc524b9e36eca9f9ecee85355b4);
+            
+        
+
+        marker_44_d1e50a13fd6c282c69e6a6e3ef5dc2ee.bindPopup(popup_a80e90346bcc01e66d669ff5cbba84ce)
+        ;
+
+        
+    
+    
+            marker_44_d1e50a13fd6c282c69e6a6e3ef5dc2ee.bindTooltip(
+                `<div>
+                     Click for hotel name
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

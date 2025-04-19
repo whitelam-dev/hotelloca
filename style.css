@@ -1,0 +1,95 @@
+body, html {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #f4f5f7;
+  margin: 0;
+  padding: 0;
+  color: #21242a;
+}
+.header-bar {
+  width: 100vw;
+  background: linear-gradient(90deg, #e3e6ec 0%, #f4f5f7 100%);
+  color: #444;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 22px 0 18px 0;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(120,130,140,0.04);
+  margin-bottom: 18px;
+  border-bottom: 1.5px solid #e9e9ee;
+}
+#table-container {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  min-width: 320px;
+  max-width: 390px;
+  background: #f4f5f7;
+  box-shadow: 0 4px 24px rgba(120,130,140,0.10);
+  border-radius: 0;
+  z-index: 9999;
+  user-select: none;
+  border: 1.5px solid #e3e6ec;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 0;
+  width: 360px;
+  height: 100px;
+  overflow: auto;
+  resize: none;
+}
+#table-resize-handle {
+  width: 100%;
+  height: 13px;
+  background: repeating-linear-gradient(90deg, #e3e6ec 0px, #e3e6ec 4px, #f4f5f7 4px, #f4f5f7 8px);
+  cursor: ns-resize;
+  border-top: 1px solid #e3e6ec;
+  box-sizing: border-box;
+  z-index: 10;
+  display: block;
+}
+#table-drag-handle {
+  width: 100%;
+  height: 32px;
+  background: linear-gradient(90deg, #f4f5f7 0%, #e3e6ec 100%);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05em;
+  color: #888;
+  font-weight: 600;
+}
+.hotel-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  font-size: 1.04em;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+}
+.hotel-table tbody tr {
+  cursor: pointer;
+}
+.hotel-table tbody tr:hover {
+  background: #e0e7ff;
+  color: #222;
+}
+.hotel-table th {
+  position: sticky;
+  top: 0;
+  background: #f4f5f7;
+  color: #757f9a;
+  font-weight: 600;
+  padding: 8px 5px;
+  border-bottom: 2px solid #e3e6ec;
+  z-index: 2;
+}
+.hotel-table td {
+  padding: 6px 5px;
+  border-bottom: 1px solid #e3e6ec;
+  background: #fff;
+}
